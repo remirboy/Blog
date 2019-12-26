@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Work</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h5 class="my-0 mr-md-auto font-weight-normal">Bugulma Blog</h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" ><%=link_to "Main page", home_path%></a>
+     <% if user_signed_in? %>
+    <a class="p-2 text-dark"><%=link_to "New post",new_post_path%></a>
+    <% end%>
+    <a class="p-2 text-dark"><%=link_to "Author",about_path%></a>
+    <% if user_signed_in? %>
+    <a class="p-2 text-dark"> <%= link_to "Log out", destroy_user_session_path, :method => :delete %></a>
+    <a class="p-2 text-dark"><%=current_user.email%></a>
+    <% else %>
+    <a class="p-2 text-dark" href="<%= new_user_registration_path%>">Sign up</a>
+    <a class="p-2 text-dark" href="<%= new_user_session_path%>">Log in</a>
+    <% end %>
+  </nav>
+
+  <p class="notice"><%= notice%></p>
+  <p class="alert"><%= alert %></p> 
+
+ 
+  </div>
+  <div class='container'>
+    <%= yield %>
+    </div>
+  </body>
+</html>

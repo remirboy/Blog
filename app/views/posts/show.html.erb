@@ -1,0 +1,26 @@
+<h1><%= @post.title%></h1>
+<a><strong>Author:</strong> <%= @post.user.email%></a>
+<p><strong>Text of message:</strong><%= @post.content%></p>
+<%if @post.user_id==current_user.id %>
+<%= link_to "Edit", edit_post_path(@post), :class => 'btn btn-warning'%>
+<%= link_to "Delete", post_path(@post), method: :delete, data: {confirm:"Are you sure?"}, :class => 'btn btn-warning'%>
+<% end %>
+<h2>Comments</h2>
+<% @post.comments.each do |comment| %>
+<div class='well'>
+  <p><strong><%=  %></strong>: <%=comment.content %> 
+  <%if @post.user_id==current_user.id %>
+   <a><%= link_to "X", post_comment_path(@post, comment),method: :delete, data: {confirm:"Are you sure?"} %></a><% end %> </p> 
+   <% end %>
+  </div> 
+<%= form_for([@post, @post.comments.build]) do |f|%>
+<% if @post.errors.any?%>
+    <% @post.errors.full_messages.each do |msg| %>
+      <div class='alert alert-danger'><%=msg%></div>
+    <% end %>
+<% end %>
+<p>Comment</p>
+<%= f.text_area(:content,{:class => 'form-control'})%>
+<br>
+<%= f.submit({:class => 'btn btn-success'})%>
+<% end%>
